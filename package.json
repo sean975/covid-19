@@ -1,0 +1,17 @@
+{
+  "name": "13.antdv-covid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "install-server": "npm i --prefix server",
+    "install-client": "npm i --prefix client",
+    "install": "npm run install-server && npm run install-client",
+    "server": "cd server && nodemon",
+    "client": "cd client && npm run serve",
+    "watch": "start npm run server && start npm run client"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Continent {
+  id                  String  @id @db.Uuid
+  continent           String  @db.Char
+  twoLetterSymbol     String? @db.Char
+  threeLetterSymbol   String? @db.Char
+  infectionRisk       Float
+  caseFatilityRate    Float
+  testPercentage      Float
+  recoveryProporation Float
+  totalCases          BigInt
+  newCases            Int
+  totalDeaths         Int
+  newDeaths           Int
+  totalRecovered      String  @db.Char
+  activeCases         Int
+  totalTests          String  @db.Char
+  population          String  @db.Char
+}
+
+model Country {
+  id                  String  @id
+  rank                Int
+  country             String
+  twoLetterSymbol     String?
+  threeLetterSymbol   String?
+  infectionRisk       Float
+  caseFatalityRate    Float
+  recoveryProporation Float
+  totalCases          BigInt
+  newCases            BigInt
+  totalDeaths         BigInt
+  newDeaths           BigInt
+  totalRecovered      String
+  newRecovered        BigInt
+  activeCases         BigInt
+  population          String
+  totalTests          String
+  continent           String
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model State {
+  country             String?
+  province            String  @id
+  iso                 String?
+  date                String?
+  confirmed           Int?
+  recovered           Int?
+  deaths              Int?
+  caseFatalityRate    Float?
+  fatalityRate        Float?
+  active              Int?
+  recoveryProporation Float?
+}
