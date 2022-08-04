@@ -70,7 +70,7 @@ function getWorldData() {
         totalTests: doc.TotalTests
       })
     })
-    return result
+    return result[0]
   }).catch(function (error) {
     console.error(error);
   });
@@ -107,11 +107,30 @@ async function pushDataToDB() {
   }
 }
 
+async function updateData() {
+  let allCountriesData = await getAllCountriesData()
+  let worldData = await getWorldData()
+  allCountriesData.forEach(async data => {
+    await prisma.Country.update({
+      where: {
+        id: data.id,
+      },
+      data
+    })
+  })
+  await prisma.Country.update({
+    where: {
+      country: "World",
+    },
+    data: worldData
+  })
+}
 
 
 module.exports = {
   getAllCountriesData,
   getWorldData,
   getStatesDataOfACountry,
-  pushDataToDB
+  pushDataToDB,
+  updateData
 }

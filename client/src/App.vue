@@ -9,7 +9,7 @@
     <div class="button-container">
       <a-button
         :type="currentButton == 'allCountries' ? 'primary' : ''"
-        @click.prevent="loadAllCountriesData"
+        @click.prevent="loadCountriesData"
         >All Countries</a-button
       >
       <a-button
@@ -45,6 +45,7 @@
     <all-countries
       v-if="currentButton == 'allCountries'"
       :arrayData="arrayData"
+      @paginate-countries-data="paginateCountriesData"
     ></all-countries>
 
     <!-- Table for a specific country data -->
@@ -100,7 +101,7 @@ export default {
   },
   computed: {
     formattedCountry() {
-      return upperFirst(lowerCase(this.country));
+      return upperFirst(lowerCase(this.country.split(' ').join('')));
     },
   },
   methods: {
@@ -146,7 +147,7 @@ export default {
         })
         .catch((err) => console.error(err));
     },
-    loadAllCountriesData() {
+    loadCountriesData() {
       this.currentButton = 'allCountries';
       this.isValidCountry = true;
       axios
@@ -156,6 +157,9 @@ export default {
           console.log(this.arrayData);
         })
         .catch((error) => console.log(error));
+    },
+    paginateCountriesData(newData) {
+      this.arrayData = newData;
     },
 
     loadCountries() {

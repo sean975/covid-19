@@ -1,6 +1,14 @@
 <template>
   <a-descriptions title="All Countries Statistics" bordered></a-descriptions>
-  <a-table :columns="columns" :data-source="arrayData" bordered>
+  <a-table
+    :columns="columns"
+    :data-source="arrayData"
+    :pagination="{
+      total: 230,
+      onChange: paginate,
+    }"
+    bordered
+  >
     <template #bodyCell="{ column, text }">
       <template v-if="column.dataIndex === 'country'">
         <a>{{ text }}</a>
@@ -11,6 +19,7 @@
 
 <script>
 import { Descriptions, Table } from 'ant-design-vue';
+import axios from 'axios';
 export default {
   name: 'AllCountries',
   components: {
@@ -81,10 +90,20 @@ export default {
           dataIndex: 'totalTests',
         },
       ],
+      // data: this.arrayData,
     };
   },
   props: {
     arrayData: Array,
+  },
+  emits: ['paginateCountriesData'],
+  methods: {
+    paginate(page, pageSize) {
+      axios
+        .get(`http://localhost:8000/countries?page=${page}&limit=${pageSize}`)
+        .then((response) => this.$emit('paginateCountriesData', response.data))
+        .catch((error) => console.log(error));
+    },
   },
 };
 </script>

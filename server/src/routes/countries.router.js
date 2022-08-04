@@ -7,9 +7,21 @@ const toJson = require('../helpers/serialize-bigint')
 
 //* get all countries data
 router.get('/', async (req, res) => {
+
+  // pagination
+  let page = +req.query.page
+  let limit = +req.query.limit
+  if (!page) page = 1
+  if (!limit) limit = 10
+
   const allCountriesData = await Country.findMany({
     where: {
       NOT: { threeLetterSymbol: null }
+    },
+    skip: (page - 1) * limit,
+    take: limit,
+    orderBy: {
+      rank: 'asc',
     }
   })
   res.status(200).send(toJson(allCountriesData))
