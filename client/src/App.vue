@@ -66,7 +66,8 @@ const options = {
       'vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com',
   },
 };
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.VUE_APP_BASE_URL;
+console.log('base url:', BASE_URL);
 
 import { PageHeader, Button, InputSearch, Alert } from 'ant-design-vue';
 import SpecificCountry from '@/components/SpecificCountry.vue';

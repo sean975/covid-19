@@ -3,7 +3,7 @@ const express = require('express')
 require('dotenv').config()
 const cors = require('cors')
 
-const { updateData } = require('./services/import-data')
+const { updateData, pushDataToDB } = require('./services/import-data')
 
 const app = express()
 const port = process.env.PORT || 8888
@@ -22,6 +22,6 @@ app.use('/states', statesRouter)
 
 setInterval(updateData, 24 * 3600 * 1000)
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Listening on port ${port}`)
 })

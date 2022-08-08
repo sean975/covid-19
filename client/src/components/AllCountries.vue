@@ -100,7 +100,9 @@ export default {
   methods: {
     paginate(page, pageSize) {
       axios
-        .get(`http://localhost:8000/countries?page=${page}&limit=${pageSize}`)
+        .get(
+          `${process.env.VUE_APP_BASE_URL}/countries?page=${page}&limit=${pageSize}`
+        )
         .then((response) => this.$emit('paginateCountriesData', response.data))
         .catch((error) => console.log(error));
     },
